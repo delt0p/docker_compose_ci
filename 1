@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  ui:
+    image: ui:latest
+    build: ./Docker/docker-compose/docker-compose-ci/ui
+    ports:
+    - target: 80
+      published: 80
+    depends_on:
+    - jenkins
+    - api 
+volumes:
+  jenkins-home:
+  mongo:
+
+  api:
+     image: api:latest
+     build: ./Docker/docker-compose/docker-compose-ci/api
+     depends_on:
+     - mongo
+
+
+  mongo:
+     image:
+     volumes: 
+     - type: volume
+       source: mongo
+       target: /data/db
+
+  jenkins:
+     image: bobcruthley/jenkins:latest
+     volumes: 
+     - type: volume
+       source: jenkins-home
+       target: /var/jenkins_home
+     - type: bind
+       source: /var/run/docker.sock
+       target: /var/run/docker.sock
+     environment:
+     - JENKINS_OPTS: '--prefix=jenkins'
