@@ -8,5 +8,5 @@ EXPOSE 4200
 FROM nginx
 EXPOSE 80
 WORKDIR /app
-COPY --from=build /build/dist/poolmanger-ui .
+COPY --from=build /build/dist/poolmange-ui .
 COPY nginx.conf /etc/nginx/nginx.conf

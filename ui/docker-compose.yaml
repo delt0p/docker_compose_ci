@@ -1,11 +1,11 @@
-version: '3.7'
+version: '3.3'
 volumes:
   jenkins-home:
   mongo:
 services:
   ui:
-    image: ui:latest
-    build: .
+    image: delt0p/pool-ui:latest
+    build: ../ui
     ports:
     - target: 80
       published: 80
@@ -13,7 +13,7 @@ services:
     - jenkins
     - api 
   api:
-    image: api:latest
+    image: delt0p/pool-api:latest
     build: ../api
     depends_on:
     - mongo
